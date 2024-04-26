@@ -7,7 +7,7 @@ spring:
   cloud:
     gateway:
       default-filters:
-        - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin
+        - DedupeResponseHeader=Access-Control-Allow-Credentials, Access-Control-Allow-Origin
       globalcors:
         corsConfigurations:
           "[/**]":
@@ -40,5 +40,6 @@ eureka:
     fetch-registry: true
     service-url:
       defaultZone: http://localhost:8761/eureka/
-    instance:
-      hostname: localhost
+  instance:
+    hostname: localhost
+    prefer-ip-address: true
