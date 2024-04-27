@@ -1,45 +1,32 @@
-server:
-  port: 9191
-
 spring:
   application:
-    name: API-GATEWAY
+    name: api-gateway
+
   cloud:
     gateway:
-      default-filters:
-        - DedupeResponseHeader=Access-Control-Allow-Credentials, Access-Control-Allow-Origin
-      globalcors:
-        corsConfigurations:
-          "[/**]":
-            allowedOrigins: "*"
-            allowedHeaders: "*"
-            allowedMethods:
-              - GET
-              - POST
-              - PUT
-              - DELETE
-              - PATCH
-              - OPTIONS
       routes:
+        ## service1
         - id: USER-SERVICE
           uri: lb://USER-SERVICE
           predicates:
             - Path=/api/v1/users/**
+
+        ## Service2
         - id: HOTEL-SERVICE
-          uri: lb://HOTEL-SERVICE
+          uri: lb://sHOTEL-SERVICE
           predicates:
             - Path=/api/v1/hotels/**
+
+
         - id: RATING-SERVICE
           uri: lb://RATING-SERVICE
           predicates:
             - Path=/api/v1/ratings/**
 
+server:
+  port: 9191
+
 eureka:
   client:
-    register-with-eureka: true
-    fetch-registry: true
     service-url:
-      defaultZone: http://localhost:8761/eureka/
-  instance:
-    hostname: localhost
-    prefer-ip-address: true
+      defaultZone: http://localhost:8761/eureka
